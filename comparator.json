@@ -1,0 +1,18 @@
+{
+    "challenge_module": "Challenge",
+    "solution_module": "Solution",
+    "theorem_names": [
+        "SZ.sqrtTwo_mem_S",
+        "SZ.sqrtThree_mem_MahlerZ",
+        "SZ.sqrtThree_notMem_S",
+        "SZ.sqrt_natCast_mem_S_iff",
+        "SZ.mem_MahlerZ_of_three_le",
+        "SZ.sqrt_mem_MahlerZ_of_four_le",
+        "SZ.exists_dvd_floor_sqrt",
+        "SZ.exists_eventually_composite_sqrt",
+        "SZ.continuum_le_mk_witnesses_sqrtThree",
+        "SZ.exists_transcendental_witness_sqrtThree"
+    ],
+    "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+    "enable_nanoda": false
+}

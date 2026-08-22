@@ -1,0 +1,577 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+#
+# (C) 2026 Ralf Stephan, in collaboration with Claude Code.
+# Released under CC0 1.0 Universal (public-domain dedication).
+version: "v0.4"
+
+project:
+  name: "Even integral parts of powers of square roots"
+  description: >-
+    A Lean 4 / Mathlib development of a paper, which answers a problem by Dubickas.
+    Dubickas (Glasgow Math. J. 48 (2006), 331–336) splits the reals α > 1 in
+    two: α lies in 𝒵 when some real ξ ≠ 0 makes every integral part ⌊ξαⁿ⌋,
+    n ≥ 1, even, and in 𝒮 otherwise. At α = 3/2 this is Mahler's question, and
+    open; his Problem 3 asks whether √3 lies in 𝒮 or in 𝒵. This formalization
+    settles that question and the whole square-root slice: √3 ∈ 𝒵 by an explicit
+    ξ = 1.34160899796…, and for an integer m ≥ 2 one has √m ∈ 𝒮 exactly when
+    m = 2. The mechanism is not Diophantine approximation but the arithmetic of
+    Cantor sets, and rests on the triviality that √m² = m is an integer: splitting
+    n into even and odd values turns the one orbit into two base-m orbits coupled
+    by x + √m y = σ, and a covering induction — Utz's 1951 theorem on the distance
+    set of the Cantor discontinuum at m = 3, proved here for every base and every
+    modulus — solves that equation inside the restricted-digit set. The same
+    machinery at a general modulus gives, for p ≥ 2 and non-square m ≥ 3 in either
+    of two explicit ranges, a real ξ ≠ 0 with p ∣ ⌊ξ√mⁿ⌋ for every n ≥ 1, hence
+    integral parts that are composite from some point on; and the greedy's
+    branching shows the witnesses for √3 have cardinality 2^ℵ₀, so all but
+    countably many of them are transcendental. The informal account is the
+    companion paper doi:10.13140/RG.2.2.32215.43682.
+    Credit divides as follows, in contributor terms rather than bibliographic
+    ones: the mathematical discovery is the Fable-5 agent's; the formalization is
+    the Fable-5 and Opus-5 agents'; the agents also drafted the prose of the
+    companion paper, which the author revised; the direction and the review are
+    the author's, who is responsible for the mathematical content. Bibliographic
+    authorship of the paper is the author's alone — the collaboration is credited
+    in its Acknowledgements, not in its byline, as is usual for an AI tool. There
+    is no sorry outside the deliberate placeholders in Challenge.lean, no
+    project-defined axiom, no native_decide, and Mathlib is the only Lake
+    dependency of the development itself.
+  authors:
+    # Contributor roles for the formalization, not a bibliographic byline; the
+    # companion paper's byline is recorded under sources.
+    - "Ralf Stephan (direction, review, paper author)"
+    - "Claude Code, claude-fable-5 (mathematical discovery, formalization, paper drafting)"
+    - "Claude Code, claude-opus-5 (formalization, paper drafting)"
+  license: "CC0-1.0"
+  responsible_maintainers:
+    - "Ralf Stephan"
+
+repository:
+  role: substantive-development
+
+classification:
+  arxiv: [math.NT, math.DS]
+  msc2020: ["11J71", "11K16", "11A63", "28A80", "11B83", "68V20"]
+
+status:
+  scope: >-
+    Complete for every lettered result: the paper's Theorems A, B and C are
+    proved in full, clause by clause, as is Theorem 9.1 with its branching
+    analysis, and each cell of Theorem B ships with its own witness so that none
+    is vacuous. Nothing is assumed from the literature — the covering induction
+    is proved rather than cited to [Utz51], and the cells that [Dub06EO] already
+    covers are reproved from Mathlib alone, so the capstones carry no citation
+    and no cited-literature axiom. Not formalized, and flagged as such in the
+    paper's Appendix A: the thickness computation of Section 4.1 and all of
+    Section 8 (the q ≥ 3 volume count and the zonotope obstruction). Neither is
+    used anywhere; no proof in the paper refers to the thickness of K_m.
+  # The development contains no sorry at all. These counts exclude the deliberate
+  # placeholders in Challenge.lean, which are the Comparator convention.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+    - declaration: "SZ.sqrtTwo_mem_S"
+      file: "SZ/SqrtTwo.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "SZ.sqrtThree_mem_MahlerZ"
+      file: "SZ/SqrtThree.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "SZ.sqrtThree_notMem_S"
+      file: "SZ/SqrtThree.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "SZ.sqrt_natCast_mem_S_iff"
+      file: "SZ/Cells.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "SZ.mem_MahlerZ_of_three_le"
+      file: "SZ/Tijdeman.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "SZ.sqrt_mem_MahlerZ_of_four_le"
+      file: "SZ/ThmC.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "SZ.exists_dvd_floor_sqrt"
+      file: "SZ/ThmC.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "SZ.exists_eventually_composite_sqrt"
+      file: "SZ/ThmC.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "SZ.continuum_le_mk_witnesses_sqrtThree"
+      file: "SZ/CoverTree.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+    - declaration: "SZ.exists_transcendental_witness_sqrtThree"
+      file: "SZ/CoverTree.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+      literature_dependencies: []
+
+fidelity:
+  divergences: >-
+    The paper defines 𝒵 by even integral parts, the second of the two equivalent
+    forms of [Dub06EO] p. 331; SZ.MahlerZ is that form, with the source's
+    quantifier n ≥ 1, although every witness constructed here works from n = 0,
+    which is strictly stronger. Theorem A is formalized with two deviations from
+    the text. Lemma 2.1 is proved in the sharper form that computes the integral
+    part exactly, ⌊t·mˢ⌋ = N·mˢ + Σ_{i<s} d_i·m^{s−1−i}, rather than only up to
+    parity; the parity corollary is then a one-line divisibility argument, the
+    two orbit values ⌊ξ√3⌋ = 2 and ⌊3ξ⌋ = 4 are instances of it at s = 0, and
+    Lemma 3.1 needs no hypothesis relating p to m, since every summand is visibly
+    a multiple of p — the hypothesis p ∣ m or p ∣ m−1 is what the telescoping
+    induction of Section 3 needs, not what the statement needs. And the real
+    ⟨d⟩ is defined as the supremum of the partial sums rather than as the sum of
+    a series, which keeps every estimate order-theoretic; the limit description
+    is recovered by a single lemma where it is needed. Five further statements
+    are formalized in the form the paper's own proof establishes and uses:
+    (a) Theorem 4.1 appears as the admissibility claim of its proof
+    (SZ.Slice.pick_adm) together with the resulting solution of (3.1) in K
+    (SZ.Slice.digitReal_translate), not as the set identity K + √m K = [0,U] —
+    the set K is never introduced in Lean, only its digit streams, and the
+    inclusion ⊆ is the half nothing uses; (b) Proposition 3.2 is stated for the
+    streams the greedy produces rather than for an arbitrary pair solving (3.1);
+    (c) Lemma 3.3 is proved under p ≤ U rather than U > p, the endpoint case
+    surviving on the irrationality of √m rather than on the length of the
+    interval; (d) "composite" in Theorem C is rendered as an explicit
+    factorization with both factors > 1; (e) the cells m ≥ 9 of Theorem B take
+    the shorter route through [3,∞) ⊆ 𝒵 (SZ.mem_MahlerZ_of_three_le), the
+    printed uniform-greedy proof being formalized too, as
+    SZ.sqrt_mem_MahlerZ_of_four_le. Theorems C and 9.1 produce ξ > 0 where the
+    paper asks only for ξ ≠ 0. Theorem 9.1's cardinality half is compared in the
+    unfolded form SZ.continuum_le_mk_witnesses_sqrtThree, with W written out
+    rather than referred to as SZ.witnessSet, for a mechanical reason recorded in
+    COMPARATOR.md: Lean lifts a nested proof out of a def's body into an
+    auxiliary constant whose name records which declaration of the enclosing
+    module first needed it, and a challenge file cannot reproduce such a name
+    honestly. The remark of Section 5.1 — that the selection rule picks the
+    smallest admissible offset — is neither used nor formalized; the fourth
+    cross-check computes both descriptions independently and verifies that they
+    agree at every step. Lemma names follow the development, not the paper's
+    numbering.
+
+sources:
+  - title: "Even integral parts of powers of square roots"
+    authors: ["Ralf Stephan"]
+    type: paper
+    id: "https://doi.org/10.13140/RG.2.2.32215.43682"
+    location: "Theorems A, B, C and Theorem 9.1"
+    relationship: formalizes
+    author_endorsement: participated
+    note: >-
+      The source of record: its lettered theorems, Theorem 9.1 and Proposition
+      2.3 are exactly the ten compared declarations. Paper and formalization come
+      from the same collaboration, were developed together, and are mutually
+      faithful; Appendix A.1 of the paper gives the Lean identifier of every
+      formalized statement and records where the Lean form differs from the
+      printed one. A prior-art search was run before any claim, at gate G-1 of
+      the project plan (2026-08-20, artifact plans/note-dubD1O5-G1.html): the
+      forward-citation lane of [Dub06EO] is complete rather than sampled — five
+      citing works in twenty years, all read, with OpenAlex agreeing on the four
+      DOI-indexed ones — plus the zbMATH and arXiv title/metadata lanes, a local
+      corpus of 271 extracted PDFs, and OEIS, all negative. Two corrections came
+      out of the sweep and are carried by the paper: the assertion "√m ∈ 𝒵 for
+      each integer m ≥ 4" on p. 332 of [Dub06EO] has no locatable proof, so
+      m ∈ {3,5,6,7,8} are the cells requiring one; and the cover lemma at m = 3
+      is Utz's 1951 theorem, statement and proof, which must be cited. Nothing
+      anticipating Theorems A–C was found, but a search that returns nothing does
+      not establish priority: novelty is recorded as unknown.
+
+  - title: "Even and odd integral parts of powers of a real number"
+    authors: ["Arturas Dubickas"]
+    type: paper
+    id: "https://doi.org/10.1017/S0017089506003090"
+    location: "Glasgow Math. J. 48 (2006), 331–336; Problem 3 (p. 332), p. 333, Thm 1(i), Thm 2(i)"
+    relationship: background
+    author_endorsement: not-contacted
+    note: >-
+      Defines 𝒮 and 𝒵 and poses Problem 3, which Theorem A answers. Two of the
+      five cells of Theorem B restate what is proved there — the perfect squares
+      (p. 333, ξ = 2) and m ≥ 9 (Theorem 1(i), after Tijdeman) — and both are
+      reproved from scratch in SZ/ rather than cited or assumed. Its Theorem 2(i)
+      gives 2^{1/q} ∈ 𝒮; the mechanism inside it at q = 2 is isolated as
+      Proposition 2.3, again reproved. The four cells m ∈ {5,6,7,8} are asserted
+      on p. 332 without proof or reference and no proof could be located, so they
+      are treated as requiring one; a reader who knows a source should regard
+      them as a reproof.
+
+  - title: "The distance set for the Cantor discontinuum"
+    authors: ["W. R. Utz"]
+    type: paper
+    location: "Amer. Math. Monthly 58 (1951), no. 6, 407–408"
+    relationship: background
+    author_endorsement: "n/a"
+    note: >-
+      The covering induction of Section 4 at m = 3 is this theorem, statement and
+      proof: his four surviving squares are the four digit pairs of
+      SZ.pick_residual_mem. It is proved in SZ/CoverGame.lean and SZ/Slice.lean
+      for every base m, modulus p and digit alphabet rather than cited, so the
+      formal capstones carry no literature axiom. What Section 4 adds to [Utz51]
+      is the even-m half, where the thickness hypothesis fails and no
+      Newhouse-type criterion applies. Read in the original at gate G-1; no DOI
+      recorded.
+
+  - title: "An unsolved problem on the powers of 3/2"
+    authors: ["Kurt Mahler"]
+    type: paper
+    location: "J. Austral. Math. Soc. Ser. A 8 (1968), 313–321"
+    relationship: background
+    author_endorsement: "n/a"
+    note: >-
+      The question that makes the dichotomy interesting: whether 3/2 lies in 𝒵.
+      Stated in SZ/Defs.lean as SZ.MahlerQuestion and nowhere assumed; this
+      development proves nothing about it.
+
+  - title: "Note on Mahler's 3/2-problem"
+    authors: ["Robert Tijdeman"]
+    type: paper
+    location: "K. Norske Vidensk. Selsk. Skr. 16 (1972), 1–4"
+    relationship: background
+    author_endorsement: not-contacted
+    note: >-
+      The construction behind the m ≥ 9 cell, not used as stated: SZ/Tijdeman.lean
+      runs an explicit even greedy x₀ = 2, x_{n+1} = 2⌈αxₙ/2⌉ on the
+      even-integral-part form, in place of nested intervals on the fractional-part
+      form. Cited through [Dub06EO] Thm 1(i); not obtained, and no formalized
+      argument depends on its text.
+
+  - title: "Explicit algebraic numbers all whose integer parts of powers are composite"
+    authors: ["Seungki Hahn", "Dan Ismailescu", "Gyumin Kim", "Minjae Kim"]
+    type: preprint
+    id: "arXiv:2608.05309"
+    location: "preprint (2026)"
+    relationship: background
+    author_endorsement: not-contacted
+    note: >-
+      The designed-α counterpart of Theorem C, where it is the algebraic number
+      rather than the multiplier that is constructed. Read at gate G-1; nothing
+      is assumed from it and no formalized statement depends on it.
+
+related_formalizations:
+  - id: "https://doi.org/10.13140/RG.2.2.20582.79689"
+    relationship: builds-on
+    note: >-
+      The Lean development accompanying the companion paper "Even integral parts
+      of powers of quadratic Pisot numbers" (repository directory Even-Integral),
+      which classifies 𝒮 versus 𝒵 for the quadratic Pisot numbers. Same author,
+      same collaboration, same namespace SZ, and two modules shared byte for
+      byte: SZ/Defs.lean (the sets 𝒵 and 𝒮, tail closure, the perfect-square
+      cell) and SZ/Tijdeman.lean (the even greedy giving [3,∞) ⊆ 𝒵, which is the
+      m ≥ 9 cell here and one of five cells there). Beyond that common base the
+      two developments are disjoint: neither one's theorems are used by the
+      other, the classes they treat do not overlap (√m is neither Pisot nor
+      Salem), and the methods differ — trace recurrences there, restricted-digit
+      Cantor arithmetic here.
+
+automation:
+  methods:
+    - method: agent
+      models: ["claude-fable-5"]
+      framework: "Claude Code"
+      role: >-
+        Mathematical discovery. The reduction of the single orbit
+        (⌊ξ√mⁿ⌋)_{n≥1} to two coupled base-m orbits, which is where √m² = m
+        does the work; the recognition that the resulting equation
+        x + √m y = σ is solved by a covering induction on restricted-digit
+        streams — Utz's 1951 argument at m = 3, generalized to every base,
+        modulus and alphabet; the tail-hygiene analysis that rules out
+        non-canonical expansions, which is what the m = 3 cell of Problem 3
+        needs and what the classical route does not supply; and the branching
+        of the admissible tree that gives continuum-many witnesses.
+    - method: agent
+      models: ["claude-fable-5", "claude-opus-5"]
+      framework: "Claude Code"
+      role: >-
+        Formalization. All Lean text — the eleven modules of SZ/ and the
+        Comparator challenge and solution modules — and the five numerical
+        cross-checks in SZ/checks/. Used with the lean-lsp MCP server for goal
+        inspection, Mathlib search and tactic trials, and driven turn by turn
+        from a written plan, maintained under the author's direction, that fixed
+        the targets and the hygiene gates. Both agents also drafted the prose of
+        the companion paper, which the author revised and approved; the split of
+        drafting between the two models was not logged.
+    - method: manual
+      models: []
+      role: >-
+        Direction, review, and authorship of the companion paper. The author
+        chose the problem, set the targets and the hygiene gates, steered the
+        work turn by turn, revised the drafted prose, reviewed every statement
+        against the paper, and takes sole responsibility for the mathematical
+        content. The paper's byline is "Ralf Stephan" alone, which is why
+        sources records that single author; the collaboration is credited in its
+        Acknowledgements. The formalization credit recorded in project.authors
+        above is the agents', and those entries are contributor roles, not
+        bibliographic authorship.
+  spend_usd: "subscription-based usage ($100/month subscription; no separate API spend)"
+  notes: >-
+    Two independent kinds of check ship with the repository. Five Python
+    programs in SZ/checks/, described in Appendix A.2 of the paper, share no code
+    with the Lean development or with each other and recompute in exact
+    arithmetic: the selection rule at m = 3 with the integer comparator P² ≶ 3Q²
+    in ℤ[√3] (2000 steps, 40 decimals of ξ at three truncation depths, ⌊ξ√3ⁿ⌋
+    even for n = 1..1000); the general-(p,m) greedy that produced the two printed
+    tables, with the gap conditions verified for all p ≤ 8, m < 200 with U > p;
+    the admissible tree in ℤ[√3], confirming a full binary tree to depth 10 and
+    measuring the factor complexity of the digit stream; the generic cover game at
+    the four cells m ∈ {5,6,7,8}; and the same for Theorem C at each row of its
+    table. Second, `lake test` runs leanprover/comparator on comparator.json,
+    re-deriving the axiom list from a kernel replay of a fresh export of both the
+    challenge and the solution. Wall time and hardware were not recorded.
+
+review:
+  status: self-assessed
+  reviewers:
+    - "Ralf Stephan"
+  notes: >-
+    The author directed the work and checked the statements against the source
+    paper. No independent review: the agents that produced the proofs also ran
+    the faithfulness passes, and no external referee has read the development or
+    the paper.
+
+limitations:
+  - >-
+    The compared theorems depend on propext, Classical.choice and Quot.sound and
+    nothing else. There is no sorry outside the deliberate placeholders in
+    Challenge.lean, no project-defined axiom and no native_decide. Challenge.lean
+    fixes no definition holes, so no compared statement can be hollowed out by a
+    definition value supplied elsewhere.
+  - >-
+    Novelty is unknown. The G-1 prior-art search found no anticipation of
+    Theorems A–C, but it has residual limits: the recreational lane is sampled
+    (OEIS) rather than exhausted, so a problem column carrying a ξ-design puzzle
+    is not excluded; part of one survey remains unseen; and the claim that no
+    proof exists in print for the cells m ∈ {5,6,7,8} is a statement about the
+    literature that could be reached, phrased throughout as "we could not locate
+    a proof", never as "no proof exists".
+  - >-
+    Not formalized: the thickness computation of Section 4.1, all of Section 8
+    (the volume count (8.1) for α = m^{1/q} with q ≥ 3, the zonotope obstruction
+    and the grid refutations at (m,q) = (5,3), (7,3), (13,4)), and the remark of
+    Section 5.1 that the selection rule picks the smallest admissible offset.
+    None is used by any proof; the last is cross-checked numerically instead.
+  - >-
+    Mahler's question stays open, and so does the arithmetic nature of the named
+    witness ξ = 1.34160899796… of Theorem A: Theorem 9.1 gives transcendental
+    witnesses in abundance but says nothing about that one. Questions 9.3–9.5 —
+    the Hausdorff dimension of the witness set, the membership of 3^{1/3}, and
+    the Lebesgue measure of 𝒵 ∩ (1,3) — are open.
+  - >-
+    SZ/ proves more than is compared: the individual cells m ∈ {5,6,7,8} of
+    Theorem B, the corollary that 𝒵 meets (2,3), the four (p,m) rows of the table
+    of Section 7, the explicit orbit values ⌊ξ√3⌋ = 2 and ⌊3ξ⌋ = 4, and the whole
+    general-(m,p,alphabet) machinery of SZ/Slice.lean and SZ/SliceHygiene.lean are
+    in the repository but not named in comparator.json.
+
+alignment:
+  namespace: "SZ"
+  statements:
+    # --- the ten compared declarations ---
+    - source: "Proposition 2.3: √2 ∈ 𝒮 (the whole 𝒮 side of Theorem B)"
+      lean: "SZ.sqrtTwo_mem_S"
+      module: "Challenge (statement), Solution / SZ.SqrtTwo (proof)"
+      status: proved
+      note: >-
+        The one base whose restricted-digit set collapses to a point: D₂ = {0},
+        so there is no Cantor set to intersect. The mechanism inside
+        [Dub06EO] Thm 2(i), isolated and reproved.
+    - source: "Theorem A: √3 ∈ 𝒵, answering [Dub06EO] Problem 3"
+      lean: "SZ.sqrtThree_mem_MahlerZ"
+      module: "Challenge (statement), Solution / SZ.SqrtThree (proof)"
+      status: proved
+      note: >-
+        The witness is the explicit ξ = (4 + ⟨a⟩)/3 = 1.3416089979611266516…
+        built by the cover greedy from the target σ = 3√3 − 4; the orbit begins
+        2, 4, 6, 12, 20, 36, 62, 108, 188, 326.
+    - source: "Theorem A, complementary form: √3 ∉ 𝒮"
+      lean: "SZ.sqrtThree_notMem_S"
+      module: "Challenge (statement), Solution / SZ.SqrtThree (proof)"
+      status: proved
+      note: "Stated separately so the reader need not unfold the set difference."
+    - source: "Theorem B: for an integer m ≥ 2, √m ∈ 𝒮 if and only if m = 2"
+      lean: "SZ.sqrt_natCast_mem_S_iff"
+      module: "Challenge (statement), Solution / SZ.Cells (proof)"
+      status: proved
+      note: >-
+        Proved cell by cell: m = 2 (Proposition 2.3), the perfect squares,
+        m = 3 (Theorem A), m ∈ {5,6,7,8}, and m ≥ 9. Both directions from
+        scratch, so the statement carries no citation.
+    - source: "Theorem B, the cells m ≥ 9 (= [Dub06EO] Thm 1(i), after Tijdeman)"
+      lean: "SZ.mem_MahlerZ_of_three_le"
+      module: "Challenge (statement), Solution / SZ.Tijdeman (proof)"
+      status: proved
+      note: >-
+        Certified in the sharper form 3 ≤ α → α ∈ 𝒵, for every real α, by an
+        explicit even greedy x₀ = 2, x_{n+1} = 2⌈αxₙ/2⌉ rather than nested
+        intervals. Reproved, not cited.
+    - source: "Theorem B by the printed proof: the uniform greedy at every non-square m ≥ 4"
+      lean: "SZ.sqrt_mem_MahlerZ_of_four_le"
+      module: "Challenge (statement), Solution / SZ.ThmC (proof)"
+      status: proved
+      note: >-
+        Theorem C at p = 2, branch (i) taking the odd bases and branch (ii) the
+        even ones. Either this or the [3,∞) route closes the cells m ≥ 9; both
+        are formalized.
+    - source: "Theorem C: p ∣ ⌊ξ√mⁿ⌋ for all n ≥ 1, under branch (i) or (ii)"
+      lean: "SZ.exists_dvd_floor_sqrt"
+      module: "Challenge (statement), Solution / SZ.ThmC (proof)"
+      status: proved
+      note: >-
+        Branch (i) is p ∣ m−1 with m ≥ p², served by the uniform alphabet and
+        hygiene from √m ≥ p; branch (ii) is p ∣ m with (m−p)(1+√m) > p(m−1),
+        where e = m−p ≤ m−2 makes hygiene free. Stated with the sharper ξ > 0.
+    - source: "Theorem C, second sentence: ⌊ξ√mⁿ⌋ is composite for all large n"
+      lean: "SZ.exists_eventually_composite_sqrt"
+      module: "Challenge (statement), Solution / SZ.ThmC (proof)"
+      status: proved
+      note: >-
+        "Composite" is an explicit factorization a·b with 1 < a and 1 < b; the
+        integral parts are divisible by p and eventually exceed p.
+    - source: "Theorem 9.1, cardinality half: W = {ξ > 0 : ⌊ξ√3ⁿ⌋ ∈ 2ℤ ∀ n ≥ 1} has cardinality 2^ℵ₀"
+      lean: "SZ.continuum_le_mk_witnesses_sqrtThree"
+      module: "Challenge (statement), Solution / SZ.CoverTree (proof)"
+      status: proved
+      note: >-
+        Compared with W written out; SZ.continuum_le_mk_witnessSet is the same
+        bound over the named set SZ.witnessSet, and SZ.treeXi_mem_Icc puts every
+        constructed witness in [4/3, 5/3], which is the paper's second clause.
+    - source: "Theorem 9.1, transcendence half: Problem 3 has a transcendental witness"
+      lean: "SZ.exists_transcendental_witness_sqrtThree"
+      module: "Challenge (statement), Solution / SZ.CoverTree (proof)"
+      status: proved
+      note: >-
+        Via SZ.not_countable_witnessSet and the countability of the algebraic
+        reals. Says nothing about the named ξ of Theorem A.
+
+    # --- definitions restated in Challenge.lean, each forced by a compared statement ---
+    - source: "The set 𝒵 (§1.1, eq. (1.1); [Dub06EO] p. 331)"
+      lean: "SZ.MahlerZ"
+      module: "Challenge (statement), SZ.Defs (definition)"
+      status: proved
+      note: "Even-integral-part form, quantifier n ≥ 1; the fractional-part form differs by ξ ↦ 2ξ."
+    - source: "The set 𝒮, the complement of 𝒵 in (1,∞) (§1.1)"
+      lean: "SZ.S"
+      module: "Challenge (statement), SZ.Defs (definition)"
+      status: proved
+      note: >-
+        {α | 1 < α} \ MahlerZ. These two are the only definitions the compared
+        statements mention; everything else, including the witness set W of
+        Theorem 9.1, is written out inline in Challenge.lean.
+
+    # --- load-bearing, not compared ---
+    - source: "Lemma 2.1 (digit parity), in the sharper exact form (2.2)"
+      lean: "SZ.floor_add_digitReal_mul_pow"
+      module: "SZ.DigitParity"
+      status: proved
+      note: >-
+        ⌊(N + ⟨d⟩)mˢ⌋ computed exactly for any base m. The parity corollary
+        SZ.even_floor_add_digitReal_mul_pow and the p-divisible form
+        SZ.dvd_floor_add_digitReal_mul_pow follow in one line each; the latter is
+        Lemma 3.1 and needs no hypothesis relating p to m.
+    - source: "Theorem 4.1 (cover lemma), for any base m and alphabet"
+      lean: "SZ.Slice.pick_adm, SZ.Slice.digitReal_translate"
+      module: "SZ.Slice"
+      status: proved
+      note: >-
+        The admissibility claim of the proof, plus the resulting solution of
+        (3.1) in K. The set identity K + √m K = [0,U] is not stated: K itself is
+        never introduced in Lean, only its digit streams.
+    - source: "Theorem 4.1 at m = 3, which is [Utz51] statement and proof"
+      lean: "SZ.pick_residual_mem"
+      module: "SZ.CoverGame"
+      status: proved
+      note: "Utz's four surviving squares are the four digit pairs of the residual."
+    - source: "Lemma 3.3 (translate)"
+      lean: "SZ.Slice.exists_translate"
+      module: "SZ.Slice"
+      status: proved
+      note: >-
+        Proved under p ≤ U rather than U > p; at U = p the interval has length
+        exactly 1 but both endpoints are irrational. The realising value is
+        j = ⌈(T−U)/p⌉, which the fifth cross-check reproduces.
+    - source: "Proposition 3.2 (reduction), at a general modulus p"
+      lean: "SZ.Slice.dvd_floor_of_hygiene"
+      module: "SZ.Slice"
+      status: proved
+      note: >-
+        Stated for the streams the greedy produces. At p = 2 it is
+        SZ.Slice.mem_MahlerZ_of_hygiene; under e ≤ m−2 the hygiene hypothesis is
+        free, which is SZ.Slice.dvd_floor_of_e_le (Remark 2.2).
+    - source: "Lemma 5.2 (growth) and Lemma 5.3 (expansion)"
+      lean: "SZ.Slice.stt_snd_lower, SZ.Slice.eq_fixed_of_trapped"
+      module: "SZ.SliceHygiene"
+      status: proved
+      note: >-
+        The tail-hygiene engine: the state's √m-coefficient grows without bound,
+        so it is never a trap fixed point. SZ.CoverGame and SZ.CoverTree carry
+        the m = 3 and any-play versions.
+    - source: "Proposition 5.4 (the uniform case, e = m−1 and m ≥ p²)"
+      lean: "SZ.Slice.dvd_floor_of_uniform"
+      module: "SZ.SliceHygiene"
+      status: proved
+      note: "At p = 2 it is SZ.Slice.mem_MahlerZ_of_uniform; branch (i) of Theorem C rests on it."
+    - source: "Proposition 5.5 (the base m = 3): the greedy produces hygienic streams"
+      lean: "SZ.exists_digitA_eq_zero, SZ.exists_digitB_eq_two"
+      module: "SZ.CoverGame"
+      status: proved
+      note: >-
+        The a-side and b-side of the case that no uniform argument reaches, and
+        the reason Theorem A needs a separate treatment. SZ.CoverTree proves the
+        same for an arbitrary starting state and an arbitrary play.
+    - source: "Equation (1.2), the coupling that makes the two orbits one"
+      lean: "SZ.coupling"
+      module: "SZ.SqrtThree"
+      status: proved
+      note: "4 + ⟨a⟩ = √3(2 + ⟨b⟩); everything in Theorem A factors through it."
+    - source: "Theorem B, the cells m ∈ {5,6,7,8}, and Corollary 6.1 (𝒵 meets (2,3))"
+      lean: "SZ.exists_mem_MahlerZ_Ioo_two_three"
+      module: "SZ.Cells"
+      status: proved
+      note: >-
+        The four cells are SZ.sqrtFive/Six/Seven/Eight_mem_MahlerZ, each with its
+        own j and its own rational inequality in √m. What [Dub06EO] asserts on
+        p. 332 without proof.
+    - source: "Theorem B, m a perfect square"
+      lean: "SZ.natCast_mem_MahlerZ"
+      module: "SZ.Defs"
+      status: proved
+      note: "Every integer g ≥ 2 lies in 𝒵, by ξ = 2. The trivial cell."
+    - source: "The table of Section 7: the four (p,m) rows"
+      lean: "SZ.exists_three_dvd_floor_sqrt_ten"
+      module: "SZ.ThmC"
+      status: proved
+      note: >-
+        Row 1; rows 2–4 are SZ.exists_three/four/five_dvd_… . Each instantiates
+        Theorem C at the named base and modulus, so none of its branches is
+        vacuous.
+    - source: "Theorem 9.1, Step 4: the admissible tree branches infinitely often"
+      lean: "SZ.tree_exists_branching"
+      module: "SZ.CoverTree"
+      status: proved
+      note: >-
+        With SZ.run_even_floor (every play is a witness) and
+        SZ.runXi_treeDigit_injective (distinct plays give distinct ξ) this is the
+        whole of the cardinality argument.
