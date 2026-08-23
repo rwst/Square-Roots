@@ -55,7 +55,7 @@ repository:
 
 classification:
   arxiv: [math.NT, math.DS]
-  msc2020: ["11J71", "11K16", "11A63", "28A80", "11B83", "68V20"]
+  msc2020: ["11J71", "11K16", "11A63", "28A80", "11B83"]
 
 status:
   scope: >-
