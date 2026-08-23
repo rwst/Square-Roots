@@ -14,7 +14,11 @@ project:
     open; his Problem 3 asks whether √3 lies in 𝒮 or in 𝒵. This formalization
     settles that question and the whole square-root slice: √3 ∈ 𝒵 by an explicit
     ξ = 1.34160899796…, and for an integer m ≥ 2 one has √m ∈ 𝒮 exactly when
-    m = 2. The mechanism is not Diophantine approximation but the arithmetic of
+    m = 2. The cells √5, √6, √7, √8 put four explicit points of 𝒵 in the
+    interval (2,3), the only interval where an answer to Dubickas's Problem 5
+    could live; they are formalized (SZ.exists_mem_MahlerZ_Ioo_two_three) but
+    are not separately compared, being subsumed by the compared Theorem B.
+    The mechanism is not Diophantine approximation but the arithmetic of
     Cantor sets, and rests on the triviality that √m² = m is an integer: splitting
     n into even and odd values turns the one orbit into two base-m orbits coupled
     by x + √m y = σ, and a covering induction — Utz's 1951 theorem on the distance
@@ -58,13 +62,29 @@ status:
     Complete for every lettered result: the paper's Theorems A, B and C are
     proved in full, clause by clause, as is Theorem 9.1 with its branching
     analysis, and each cell of Theorem B ships with its own witness so that none
-    is vacuous. Nothing is assumed from the literature — the covering induction
+    is vacuous. The abstract's shorthand — "the cases m = 2 (reproof), m = 3,
+    the cases m > 3, the p-divisibility theorem and the transcendentality
+    theorem" — names Theorems A, B, C and 9.1, and each is certified in its full
+    form rather than in the compressed one: Theorem B as the single iff
+    SZ.sqrt_natCast_mem_S_iff, whose 𝒮 side is the m = 2 cell SZ.sqrtTwo_mem_S;
+    Theorem C with both of its branches, not only the m ≡ 1 (mod p) one the
+    abstract displays; and the transcendentality theorem as both halves of
+    Theorem 9.1, the cardinality bound SZ.continuum_le_mk_witnesses_sqrtThree as
+    well as SZ.exists_transcendental_witness_sqrtThree. One clause of Theorem 9.1
+    is not a Lean statement of its own: that W ∩ [4/3, 5/3] already has
+    cardinality 2^ℵ₀ is assembled the way the paper assembles it, from
+    SZ.treeXi_mem_Icc, which puts every constructed witness in that interval, and
+    SZ.runXi_treeDigit_injective, which makes them distinct.
+    Nothing is assumed from the literature — the covering induction
     is proved rather than cited to [Utz51], and the cells that [Dub06EO] already
     covers are reproved from Mathlib alone, so the capstones carry no citation
     and no cited-literature axiom. Not formalized, and flagged as such in the
-    paper's Appendix A: the thickness computation of Section 4.1 and all of
-    Section 8 (the q ≥ 3 volume count and the zonotope obstruction). Neither is
-    used anywhere; no proof in the paper refers to the thickness of K_m.
+    paper's Appendix A: the thickness computation of Section 4.1, all of
+    Section 8 (the q ≥ 3 volume count and the zonotope obstruction), and the
+    remark of Section 5.1 that the selection rule picks the smallest admissible
+    offset. None of the three is used anywhere; no proof in the paper refers to
+    the thickness of K_m, and the Section 5.1 remark is cross-checked
+    numerically instead.
   # The development contains no sorry at all. These counts exclude the deliberate
   # placeholders in Challenge.lean, which are the Comparator convention.
   sorry_count: 0
@@ -158,7 +178,9 @@ fidelity:
     (c) Lemma 3.3 is proved under p ≤ U rather than U > p, the endpoint case
     surviving on the irrationality of √m rather than on the length of the
     interval; (d) "composite" in Theorem C is rendered as an explicit
-    factorization with both factors > 1; (e) the cells m ≥ 9 of Theorem B take
+    factorization with both factors > 1, holding from an explicit N on, which is
+    Theorem C's own "for every sufficiently large n" and what the abstract
+    compresses to "all sufficiently large integral parts"; (e) the cells m ≥ 9 of Theorem B take
     the shorter route through [3,∞) ⊆ 𝒵 (SZ.mem_MahlerZ_of_three_le), the
     printed uniform-greedy proof being formalized too, as
     SZ.sqrt_mem_MahlerZ_of_four_le. Theorems C and 9.1 produce ξ > 0 where the
@@ -186,9 +208,11 @@ sources:
       The source of record: its lettered theorems, Theorem 9.1 and Proposition
       2.3 are exactly the ten compared declarations. Paper and formalization come
       from the same collaboration, were developed together, and are mutually
-      faithful; Appendix A.1 of the paper gives the Lean identifier of every
-      formalized statement and records where the Lean form differs from the
-      printed one. A prior-art search was run before any claim, at gate G-1 of
+      faithful; Appendix A.1 of the paper indexes the paper's statements by
+      Lean identifier and records where the Lean form differs from the printed
+      one. Two names of the development are absent from that table: the compared
+      form SZ.continuum_le_mk_witnesses_sqrtThree, which the table carries in its
+      named-set form SZ.continuum_le_mk_witnessSet, and SZ.treeXi_mem_Icc. A prior-art search was run before any claim, at gate G-1 of
       the project plan (2026-08-20, artifact plans/note-dubD1O5-G1.html): the
       forward-citation lane of [Dub06EO] is complete rather than sampled — five
       citing works in twenty years, all read, with OpenAlex agreeing on the four
@@ -329,16 +353,21 @@ automation:
   spend_usd: "subscription-based usage ($100/month subscription; no separate API spend)"
   notes: >-
     Two independent kinds of check ship with the repository. Five Python
-    programs in SZ/checks/, described in Appendix A.2 of the paper, share no code
-    with the Lean development or with each other and recompute in exact
-    arithmetic: the selection rule at m = 3 with the integer comparator P² ≶ 3Q²
+    programs in SZ/checks/ — the files dubD1O5-x3-leanrule.py through
+    dubD1O5-x7-thmC.py, which are the five described in Appendix A.2 of the
+    paper — share no code with the Lean development or with each other and
+    recompute in exact arithmetic: the selection rule at m = 3 with the integer comparator P² ≶ 3Q²
     in ℤ[√3] (2000 steps, 40 decimals of ξ at three truncation depths, ⌊ξ√3ⁿ⌋
     even for n = 1..1000); the general-(p,m) greedy that produced the two printed
     tables, with the gap conditions verified for all p ≤ 8, m < 200 with U > p;
     the admissible tree in ℤ[√3], confirming a full binary tree to depth 10 and
     measuring the factor complexity of the digit stream; the generic cover game at
     the four cells m ∈ {5,6,7,8}; and the same for Theorem C at each row of its
-    table. Second, `lake test` runs leanprover/comparator on comparator.json,
+    table. The directory carries four further programs that the paper does not
+    describe, from earlier gates of the project plan: d1check2.py and
+    dubD1O5-x0/x1/x2, the last of these being the q ≥ 3 grid refutation of
+    Section 8 — the section that is not formalized. Second, `lake test` runs
+    leanprover/comparator on comparator.json,
     re-deriving the axiom list from a kernel replay of a fresh export of both the
     challenge and the solution. Wall time and hardware were not recorded.
 
@@ -366,7 +395,11 @@ limitations:
     is not excluded; part of one survey remains unseen; and the claim that no
     proof exists in print for the cells m ∈ {5,6,7,8} is a statement about the
     literature that could be reached, phrased throughout as "we could not locate
-    a proof", never as "no proof exists".
+    a proof", never as "no proof exists". The abstract's "the first there with
+    a proof that are neither rational nor Pisot nor Salem" is to be read in the
+    same key: [Dub06EO] p. 332 asserts √m ∈ 𝒵 for every m ≥ 4, which covers
+    these four cells, so what is new about them is the proof and not the
+    assertion.
   - >-
     Not formalized: the thickness computation of Section 4.1, all of Section 8
     (the volume count (8.1) for α = m^{1/q} with q ≥ 3, the zonotope obstruction
@@ -457,7 +490,9 @@ alignment:
       note: >-
         Compared with W written out; SZ.continuum_le_mk_witnessSet is the same
         bound over the named set SZ.witnessSet, and SZ.treeXi_mem_Icc puts every
-        constructed witness in [4/3, 5/3], which is the paper's second clause.
+        constructed witness in [4/3, 5/3], which is the paper's second clause;
+        that clause is not stated as a cardinality bound of its own, but follows
+        from those two the way it does in the paper.
     - source: "Theorem 9.1, transcendence half: Problem 3 has a transcendental witness"
       lean: "SZ.exists_transcendental_witness_sqrtThree"
       module: "Challenge (statement), Solution / SZ.CoverTree (proof)"

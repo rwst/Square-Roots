@@ -13,6 +13,8 @@ for every `n ≥ 1`, and `𝒮` for its complement in `(1, ∞)`. The paper prov
 * **Theorem C.** For `p ≥ 2` and a non-square `m ≥ 3` satisfying either
   `p ∣ m - 1` and `m ≥ p²`, or `p ∣ m` and `(m - p)(1 + √m) > p(m - 1)`,
   some `ξ ≠ 0` has `p ∣ ⌊ξ √mⁿ⌋` for every `n ≥ 1`.
+* **Corollary 6.1.** `√5, √6, √7, √8 ∈ 𝒵`, so `𝒵` meets `(2,3)` — the only interval
+  where an answer to Problem 5 of Dubickas (2006) could live.
 * **Theorem 9.1.** The witnesses for `√3` have cardinality `2^ℵ₀`, so all but countably
   many of them are transcendental.
 
@@ -21,15 +23,16 @@ for every `n ≥ 1`, and `𝒮` for its complement in `(1, ∞)`. The paper prov
 | path | contents |
 | :--- | :--- |
 | `SZ/` | the development, eleven modules, namespace `SZ` |
-| `SZ/checks/` | the numerical cross-checks of Appendix A.2, in Python |
+| `SZ/checks/` | the five numerical cross-checks of Appendix A.2 (`…-x3`–`-x7`), plus the earlier-gate checks, in Python |
 | `Challenge.lean` | the paper's results stated against Mathlib alone, unproved |
 | `Solution.lean` | the development, re-exported for comparison |
 | `comparator.json` | the certification config |
 | `COMPARATOR.md` | what `lake test` certifies, and how to run it |
 
-Appendix A.1 of the paper gives the Lean identifier of every formalized statement, records
+Appendix A.1 of the paper indexes the paper's statements by Lean identifier, records
 where the Lean form differs from the printed one, and flags what is not formalized (the
-thickness computation of §4.1 and all of §8). Every declaration is sorry-free and depends
+thickness computation of §4.1, all of §8, and the remark of §5.1). Every declaration is
+sorry-free and depends
 on nothing beyond Lean's three standard axioms — no literature axiom, no `native_decide`.
 
 ## Building
@@ -61,18 +64,18 @@ $\sqrt3\in\mathcal{Z}$, which answers Problem~3 of Dubickas's paper, with the
 explicit witness $\xi=1.34160899796112665163\ldots$, and $\sqrt5$,
 $\sqrt6$, $\sqrt7$, $\sqrt8$ lie in $\mathcal{Z}$ as well --- four points of
 $\mathcal{Z}$ in the interval $(2,3)$, the only interval where an answer to
-Dubickas's Problem~5 could live, and the first there that are neither
-rational nor Pisot nor Salem. The mechanism is
+Dubickas's Problem~5 could live, and the first there with a proof that
+are neither rational nor Pisot nor Salem. The mechanism is
 Cantor-set arithmetic rather than Diophantine approximation: because
 $\sqrt m^{\,2}$ is an integer, the two-scale problem collapses to a single
 base-$m$ covering induction on a pair of restricted-digit expansions, which
 at $m=3$ is Utz's 1951 theorem on the distance set of the Cantor
 discontinuum. Replacing parity by divisibility by $p$ gives, for every
 $p\ge2$ and every $m\equiv1\pmod p$ with $m\ge p^{2}$, a nonzero $\xi$ with
-$p\mid[\xi\sqrt m^{\,n}]$ for all $n$, hence with all integral parts
-composite. The case $m=3$, which is the one requiring a separate argument
-throughout, is verified in Lean~4 and depends only on Lean's three standard
-axioms.",
+$p\mid[\xi\sqrt m^{\,n}]$ for all $n$, hence with all sufficiently large
+integral parts composite. The cases $m=2$ (reproof), $m=3$, the cases
+$m>3$, the $p$-divisibility theorem and the transcendentality theorem are
+all verified in Lean~4 and depend only on Lean's three standard axioms.",
       year={2026},
       doi={10.13140/RG.2.2.32215.43682},
       url={https://www.researchgate.net/publication/413520035_Even_integral_parts_of_powers_of_square_roots}, 
